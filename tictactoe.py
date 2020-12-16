@@ -46,8 +46,22 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
+    # TODO:
+    # if terminal(board):
+    #     return "Terminal Board"
 
+    # set of possible moves
+    possible_moves = set()
+
+    row_count = 0
+    for row in board:
+        row_count += 1
+        for i in range(len(row)):
+            if row[i] == None:
+                action = (i, row_count)
+                possible_moves.add(action)
+
+    return possible_moves
 
 def result(board, action):
     """
