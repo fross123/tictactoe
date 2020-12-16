@@ -55,19 +55,23 @@ def actions(board):
 
     row_count = 0
     for row in board:
-        row_count += 1
         for i in range(len(row)):
             if row[i] == None:
                 action = (i, row_count)
                 possible_moves.add(action)
-
+        row_count += 1
     return possible_moves
 
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    raise NotImplementedError
+
+    if action not in actions(board):
+        raise ValueError("Action not possible")
+    else:
+        print ("Action possible")
+    # raise NotImplementedError
 
 
 def winner(board):
