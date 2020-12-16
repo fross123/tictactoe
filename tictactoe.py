@@ -22,8 +22,25 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    raise NotImplementedError
-
+    if board == initial_state():
+        return X
+    # elif terminal(board):
+    #     return "Game is over"
+    else:
+        # track moves so far
+        count_x = 0
+        count_o = 0
+        for row in board:
+            count_x += row.count(X)
+            count_o += row.count(O)
+        
+        # return next player
+        if count_x == count_o:
+            return X
+        elif count_x == count_o + 1:
+            return O
+        else:
+            raise ValueError ("turn count is off.")
 
 def actions(board):
     """
