@@ -4,6 +4,7 @@ Tic Tac Toe Player
 
 import math
 import copy
+import numpy
 
 X = "X"
 O = "O"
@@ -61,6 +62,7 @@ def actions(board):
                 action = (row_count, i)
                 possible_moves.add(action)
         row_count += 1
+
     return possible_moves
 
 def result(board, action):
@@ -79,8 +81,25 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    
+    # Row winner
+    for row in board:
+        if len(set(row)) == 1:
+            return row[0]
+    
+    # Collumn winner
+    for rev_board in [board, numpy.transpose(board)]:
+        for row in rev_board:
+            if len(set(row)) == 1:
+                return row[0]
+    
+    # diaganol winner
+    if len(set([board[i][i] for i in range(len(board))])) == 1:
+        return board[0][0]
+    if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1:
+        return board[0][len(board)-1]
 
+    return None    
 
 def terminal(board):
     """
