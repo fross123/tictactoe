@@ -26,8 +26,8 @@ def player(board):
     """
     if board == initial_state():
         return X
-    # elif terminal(board):
-    #     return "Game is over"
+    elif terminal(board):
+        return "Game is over"
     else:
         # track moves so far
         count_x = 0
@@ -48,9 +48,6 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    # TODO:
-    # if terminal(board):
-    #     return "Terminal Board"
 
     # set of possible moves
     possible_moves = set()
@@ -63,7 +60,11 @@ def actions(board):
                 possible_moves.add(action)
         row_count += 1
 
-    return possible_moves
+    # check if there are any possible moves
+    if len(possible_moves) == 0:
+        return None
+    else:
+        return possible_moves
 
 def result(board, action):
     """
@@ -107,7 +108,7 @@ def terminal(board):
     """
     if winner(board):
         return True
-    elif not actions(board):
+    elif actions(board) == None:
         return True
     else:
         return False
