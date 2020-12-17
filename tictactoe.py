@@ -81,19 +81,19 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    
+
     # Row winner
     for row in board:
         if len(set(row)) == 1:
             return row[0]
     
-    # Collumn winner
+    # Column winner
     for rev_board in [board, numpy.transpose(board)]:
         for row in rev_board:
             if len(set(row)) == 1:
                 return row[0]
     
-    # diaganol winner
+    # Diagonal winner
     if len(set([board[i][i] for i in range(len(board))])) == 1:
         return board[0][0]
     if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1:
