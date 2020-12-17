@@ -71,7 +71,9 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
 
-    if action not in actions(board):
+    if terminal(board):
+        raise ValueError("Terminal board")
+    elif action not in actions(board):
         raise ValueError("Action not possible")
     else:
         cp_board = copy.deepcopy(board)
@@ -113,12 +115,16 @@ def terminal(board):
     else:
         return False
 
-
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
 
 
 def minimax(board):
