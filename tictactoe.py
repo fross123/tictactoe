@@ -44,6 +44,7 @@ def player(board):
         else:
             raise ValueError ("turn count is off.")
 
+
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
@@ -51,7 +52,7 @@ def actions(board):
 
     # set of possible moves
     possible_moves = set()
-
+    
     row_count = 0
     for row in board:
         for i in range(len(row)):
@@ -65,6 +66,7 @@ def actions(board):
         return None
     else:
         return possible_moves
+
 
 def result(board, action):
     """
@@ -80,6 +82,7 @@ def result(board, action):
         cp_board[action[0]][action[1]] = player(cp_board)
         return cp_board
 
+
 def winner(board):
     """
     Returns the winner of the game, if there is one.
@@ -88,31 +91,22 @@ def winner(board):
     # Row winner
     for row in board:
         if len(set(row)) == 1 and row[0] != None:
-            # print("Row winner")
             return row[0]
     
     # Column winner
     for rev_board in [board, numpy.transpose(board)]:
         for row in rev_board:
             if len(set(row)) == 1 and row[0] != None:
-                # print("COLlumn winner")
                 return row[0]
     
     # Diagonal winner
-    # for i in range(len(board)):
-    #     if len(set([board[i][i]])) == 1:
-    #         print("dag winn")
-    #         return board[0][0]
-    # for i in range(len(board)):
-    #     if len(set([board[i][len(board)-i-1]])) == 1 and board[0][len(board)-1] != None:
-    #         print('diag winner')
-    #         return board[0][len(board)-1]
     if len(set([board[i][i] for i in range(len(board))])) == 1:
         return board[0][0]
     if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1:
         return board[0][len(board)-1]
 
     return None    
+
 
 def terminal(board):
     """
@@ -125,10 +119,12 @@ def terminal(board):
     else:
         return False
 
+
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
+
     if winner(board) == X:
         return 1
     elif winner(board) == O:
@@ -136,12 +132,11 @@ def utility(board):
     else:
         return 0
 
+
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    # print(max_value(board))
-    # print(min_value(board))
 
     if terminal(board):
         return None
@@ -166,6 +161,7 @@ def minimax(board):
             print(f"O moves: {best_action}")
             return best_action
 
+
 def max_value(board):
     v = -math.inf
     if terminal(board):
@@ -173,6 +169,7 @@ def max_value(board):
     for action in actions(board):
         v = max(v, min_value(result(board, action)))
     return v
+
 
 def min_value(board):
     v = math.inf
