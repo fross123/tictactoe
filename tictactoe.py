@@ -87,16 +87,26 @@ def winner(board):
 
     # Row winner
     for row in board:
-        if len(set(row)) == 1:
+        if len(set(row)) == 1 and row[0] != None:
+            # print("Row winner")
             return row[0]
     
     # Column winner
     for rev_board in [board, numpy.transpose(board)]:
         for row in rev_board:
-            if len(set(row)) == 1:
+            if len(set(row)) == 1 and row[0] != None:
+                # print("COLlumn winner")
                 return row[0]
     
     # Diagonal winner
+    # for i in range(len(board)):
+    #     if len(set([board[i][i]])) == 1:
+    #         print("dag winn")
+    #         return board[0][0]
+    # for i in range(len(board)):
+    #     if len(set([board[i][len(board)-i-1]])) == 1 and board[0][len(board)-1] != None:
+    #         print('diag winner')
+    #         return board[0][len(board)-1]
     if len(set([board[i][i] for i in range(len(board))])) == 1:
         return board[0][0]
     if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1:
@@ -126,9 +136,48 @@ def utility(board):
     else:
         return 0
 
-
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    # print(max_value(board))
+    # print(min_value(board))
+
+    if terminal(board):
+        return None
+    else:
+        if player(board) == X:
+            high_value = -math.inf
+            for action in actions(board):
+                v = min_value(result(board, action))
+                if v > high_value:
+                    high_value = v
+                    best_action = action
+            print(f"X moves: {best_action}")
+            return best_action
+            
+        elif player(board) == O:
+            low_value = math.inf
+            for action in actions(board):
+                v = max_value(result(board, action))
+                if v < low_value:
+                    low_value = v
+                    best_action = action
+            print(f"O moves: {best_action}")
+            return best_action
+
+def max_value(board):
+    v = -math.inf
+    if terminal(board):
+        return utility(board)
+    for action in actions(board):
+        v = max(v, min_value(result(board, action)))
+    return v
+
+def min_value(board):
+    v = math.inf
+    if terminal(board):
+        return utility(board)
+    for action in actions(board):
+        v = min(v, max_value(result(board, action)))
+    return v
