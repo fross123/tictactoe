@@ -148,7 +148,7 @@ def minimax(board):
                 if v > high_value:
                     high_value = v
                     best_action = action
-            print(f"X moves: {best_action}")
+            # print(f"X moves: {best_action}")
             return best_action
             
         elif player(board) == O:
@@ -158,7 +158,7 @@ def minimax(board):
                 if v < low_value:
                     low_value = v
                     best_action = action
-            print(f"O moves: {best_action}")
+            # print(f"O moves: {best_action}")
             return best_action
 
 
